@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import cartIcon from "../assets/cart-shopping-fast-svgrepo-com.svg";
 
 function Navbar() {
   return (
@@ -8,7 +9,7 @@ function Navbar() {
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/product-list'}>Products</Link></li>
       </ul>
-      <button><Link to={'/cart'}><img src={'./assets/cart-shopping-fast-svgrepo-com.svg'} alt='Cart'/></Link></button>
+      <button><Link to={'/cart'}><img className='w-5' src={cartIcon} alt='Cart'/></Link></button>
     </div>
   )
 }
