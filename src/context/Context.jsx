@@ -9,7 +9,10 @@ function GlobalShoppingContext({ children }) {
     "https://dummyjson.com/products",
   );
   const [productDetails, setProductDetails] = useState([]);
-  const [cartList, setCartlist] = useState([]);
+  const [cartList, setCartlist] = useState(() => {
+    const savedCart = localStorage.getItem("cartList");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
   const navigate = useNavigate();
 
   // function addToCart(getProductDetails) {
@@ -39,39 +42,35 @@ function GlobalShoppingContext({ children }) {
   //   setCartlist(existingItems);
   //   navigate("/cart");
   // }
-  
+
   function addToCart(getProductDetails) {
-  let existingItems = [...cartList];
+    let existingItems = [...cartList];
 
-  const findIndexOfCurrentItem = existingItems.findIndex(
-    (item) => item.id === getProductDetails.id
-  );
+    const findIndexOfCurrentItem = existingItems.findIndex(
+      (item) => item.id === getProductDetails.id,
+    );
 
-  if (findIndexOfCurrentItem === -1) {
-    existingItems.push({
-      ...getProductDetails,
-      quantity: 1,
-      totalPrice: getProductDetails.price,
-    });
-  } else {
-    existingItems[findIndexOfCurrentItem] = {
-      ...existingItems[findIndexOfCurrentItem],
-      quantity:
-        existingItems[findIndexOfCurrentItem].quantity + 1,
-      totalPrice:
-        (existingItems[findIndexOfCurrentItem].quantity + 1) *
-        existingItems[findIndexOfCurrentItem].price,
-    };
+    if (findIndexOfCurrentItem === -1) {
+      existingItems.push({
+        ...getProductDetails,
+        quantity: 1,
+        totalPrice: getProductDetails.price,
+      });
+    } else {
+      existingItems[findIndexOfCurrentItem] = {
+        ...existingItems[findIndexOfCurrentItem],
+        quantity: existingItems[findIndexOfCurrentItem].quantity + 1,
+        totalPrice:
+          (existingItems[findIndexOfCurrentItem].quantity + 1) *
+          existingItems[findIndexOfCurrentItem].price,
+      };
+    }
+
+    localStorage.setItem("cartList", JSON.stringify(existingItems));
+
+    setCartlist(existingItems);
+    navigate("/cart");
   }
-
-  localStorage.setItem(
-    "cartList",
-    JSON.stringify(existingItems)
-  );
-
-  setCartlist(existingItems);
-  navigate("/cart");
-}
 
   // function removeFromCart(getProductDetails, fullyRemove) {
   //   let existingItems = [...cartList];
@@ -96,33 +95,29 @@ function GlobalShoppingContext({ children }) {
   // }
 
   function removeFromCart(getProductDetails, fullyRemove) {
-  let existingItems = [...cartList];
+    let existingItems = [...cartList];
 
-  const index = existingItems.findIndex(
-    item => item.id === getProductDetails.id
-  );
+    const index = existingItems.findIndex(
+      (item) => item.id === getProductDetails.id,
+    );
 
-  if (index === -1) return;
+    if (index === -1) return;
 
-  if (fullyRemove) {
-    existingItems.splice(index, 1);
-  } else {
-    existingItems[index] = {
-      ...existingItems[index],
-      quantity: existingItems[index].quantity - 1,
-      totalPrice:
-        (existingItems[index].quantity - 1) *
-        existingItems[index].price,
-    };
+    if (fullyRemove) {
+      existingItems.splice(index, 1);
+    } else {
+      existingItems[index] = {
+        ...existingItems[index],
+        quantity: existingItems[index].quantity - 1,
+        totalPrice:
+          (existingItems[index].quantity - 1) * existingItems[index].price,
+      };
+    }
+
+    localStorage.setItem("cartList", JSON.stringify(existingItems));
+
+    setCartlist(existingItems);
   }
-
-  localStorage.setItem(
-    "cartList",
-    JSON.stringify(existingItems)
-  );
-
-  setCartlist(existingItems);
-}
 
   if (loading)
     return (
