@@ -15,34 +15,6 @@ function GlobalShoppingContext({ children }) {
   });
   const navigate = useNavigate();
 
-  // function addToCart(getProductDetails) {
-  //   let existingItems = [...cartList];
-
-  //   const findIndexOfCurrentItem = existingItems.findIndex(
-  //     (item) => item?.id === getProductDetails?.id,
-  //   );
-
-  //   if (findIndexOfCurrentItem === -1) {
-  //     existingItems.push({
-  //       ...getProductDetails,
-  //       quantity: 1,
-  //       totalPrice: existingItems?.price,
-  //     });
-  //   } else {
-  //     existingItems[findIndexOfCurrentItem] = {
-  //       ...existingItems[findIndexOfCurrentItem],
-  //       quantity: existingItems[findIndexOfCurrentItem].quantity + 1,
-  //       totalPrice:
-  //         (existingItems[findIndexOfCurrentItem].quantity + 1) *
-  //         existingItems[findIndexOfCurrentItem].price,
-  //     };
-  //   }
-
-  //   localStorage.setItem("cartList", JSON.stringify(existingItems));
-  //   setCartlist(existingItems);
-  //   navigate("/cart");
-  // }
-
   function addToCart(getProductDetails) {
     let existingItems = [...cartList];
 
@@ -71,28 +43,6 @@ function GlobalShoppingContext({ children }) {
     setCartlist(existingItems);
     navigate("/cart");
   }
-
-  // function removeFromCart(getProductDetails, fullyRemove) {
-  //   let existingItems = [...cartList];
-
-  //   const findIndexOfCurrentItem = existingItems.findIndex(
-  //     (item) => item?.id === getProductDetails?.id,
-  //   );
-
-  //   if (fullyRemove) {
-  //     existingItems.splice(existingItems[findIndexOfCurrentItem], 1);
-  //   } else {
-  //     existingItems[findIndexOfCurrentItem] = {
-  //       ...existingItems[findIndexOfCurrentItem],
-  //       quantity: existingItems[findIndexOfCurrentItem].quantity - 1,
-  //       totalPrice:
-  //         (existingItems[findIndexOfCurrentItem].quantity - 1) *
-  //         existingItems[findIndexOfCurrentItem].price,
-  //     };
-  //   }
-  //   localStorage.setItem("cartList", JSON.stringify(existingItems));
-  //   setCartlist(existingItems);
-  // }
 
   function removeFromCart(getProductDetails, fullyRemove) {
     let existingItems = [...cartList];
